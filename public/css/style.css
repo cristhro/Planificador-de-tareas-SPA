@@ -1,0 +1,246 @@
+/*------------------------------------------------------------*/
+/* ---------------- CSS PARA COSAS GENERALES ---------------- */
+/*------------------------------------------------------------*/
+html, body{
+    height: 100%;
+}
+/* Nada más cargar, todo el contenedor-principal está desactivado (para evitar un pantallazo)*/
+#contenedor-principal{
+   display: none;
+}
+/* Mensaje de aviso para formularios */
+.aviso{
+    color: #ff8700;
+}
+/*---------------------------------------------------------------------*/
+/* ---------------- CSS PARA LA CABEZERA DE LA PÁGINA ---------------- */
+/*---------------------------------------------------------------------*/
+.navbar-brand {
+    float: left;
+    height: 50px;
+    padding: 15px 15px;
+    font-size: 16px;
+    line-height: 20px;
+}
+.navbar{
+    margin-bottom: 0px;
+    border-radius: 0px;
+    cursor: pointer;
+}
+/*-------------------------------------------------------------------*/
+/* ---------------- CSS PARA EL CUERPO DE LA PÁGINA ---------------- */
+/*-------------------------------------------------------------------*/
+/* Portada de bienvenida */
+#bienvenida{
+    text-align: center;
+}
+#bienvenida > p{
+    margin-top: 20px;
+    margin-bottom: 60px;
+    font-size: 20px;
+    color: rgb(47, 151, 228);
+}
+/* Separación de los bordes (izquierdo y derecho) en las diferentes páginas */
+#nuevo-curso, #bienvenida, #buscar-cursos, #registro, #mis-cursos, #login, #portal-cursos{
+    padding: 0px 20px 0px 20px;   
+}
+.imagen-bienvenida{
+    margin-left: auto;
+    margin-right: auto;
+    width: 30%;
+}
+/* CSS para los formularios */
+.bootstrap-iso .formden_header h2, .bootstrap-iso .formden_header p, .bootstrap-iso form{
+    font-family: Arial, Helvetica, sans-serif; 
+    color: #7a7a7a
+}
+.bootstrap-iso form button, .bootstrap-iso form button:hover{
+    color: #ffffff !important;
+}
+.asteriskField{
+    color: red;
+}
+.bootstrap-iso form .input-group-addon{
+    color:#25e24e; 
+    background-color: #f80e0e; 
+    border-radius: 4px; 
+    padding-left:12px
+}
+/* ---------- CSS para centrar la paginación en la búsqueda de cursos ---------- */
+.pagination > li > a, .pagination > li > span {
+    float: none !important;
+}
+.pagination {
+    display: block !important;
+    text-align: center;
+}
+/* CSS para colorear las filas de una tabla */
+.aplicarColor{
+    transition: all 1s ease;
+    cursor: pointer;
+    background: transparent;
+}
+.aplicarColor:hover{
+    background: #23c5e0;
+}
+/* CSS para las ventanas Modal de curso */
+/* Background del Modal */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 250px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+/* Contenido del Modal */
+.modal-content {
+    position: relative;
+    background-color: #fefefe;
+    margin: auto;
+    padding: 0;
+    border: 1px solid #888;
+    width: 80%;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 1s;
+    animation-name: animatetop;
+    animation-duration: 1s;
+}
+/* Añadir animación al Modal */
+@-webkit-keyframes animatetop {
+    from {top:-80px; opacity:0} 
+    to {top:0px; opacity:1}
+}
+@keyframes animatetop {
+    from {top:-80px; opacity:0}
+    to {top:0px; opacity:1}
+}
+/* Botón para cerrar el Modal */
+.close {
+    color: white;
+    float: right;
+    font-size: 30px;
+    font-weight: bold;
+}
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+/* Parte header del Modal */
+.modal-header {
+    padding: 2px 16px;
+    background-color: #23c5e0;
+    color: white;
+    text-align: center;
+}
+/* Parte body del Modal */
+.modal-body {
+    padding: 2px 16px;
+}
+/* Parte footer del Modal */
+.modal-footer {
+    background-color: #23c5e0;
+    color: white;
+    text-align: center;
+}
+/* ---------- CSS para las ventanas Modal de login ---------- */
+/* Background del Modal */
+.modalLogin {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 250px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+/* Contenido del Modal */
+.modal-contentLogin {
+    position: relative;
+    background-color: #fefefe;
+    margin: auto;
+    padding: 0;
+    border: 1px solid #888;
+    width: 80%;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 1s;
+    animation-name: animatetop;
+    animation-duration: 1s;
+}
+/* Añadir animación al Modal */
+@-webkit-keyframes animatetop {
+    from {top:-80px; opacity:0} 
+    to {top:0px; opacity:1}
+}
+@keyframes animatetop {
+    from {top:-80px; opacity:0}
+    to {top:0px; opacity:1}
+}
+/* Botón para cerrar el Modal */
+.closeLogin {
+    color: white;
+    float: right;
+    font-size: 30px;
+    font-weight: bold;
+}
+.closeLogin:hover,
+.closeLogin:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+/* Parte header del Modal */
+.modal-headerLogin {
+    padding: 2px 16px;
+    background-color: #e02323;
+    color: white;
+    text-align: center;
+}
+/* Parte body del Modal */
+.modal-bodyLogin {
+    padding: 2px 16px;
+}
+/* Parte footer del Modal */
+.modal-footerLogin {
+    background-color: #e02323;
+    color: white;
+    text-align: center;
+    padding: 15px;
+}
+/* CSS para forzar que ciertos elementos tengan un z-index: 0 */
+.input-group .form-control {
+    z-index: 0 !important;
+}
+.pagination>.active>a{
+    z-index: 0 !important;  
+}
+.input-group-btn:last-child>.btn{
+    z-index: 0 !important;     
+}
+
+/*-------------------------------------------------------------------*/
+/* ----------------- CSS PARA EL PIE DE LA PÁGINA ------------------ */
+/*-------------------------------------------------------------------*/
+footer {
+    background-color: #f2f2f2;
+    padding: 25px;
+}
+#contenedor-pie{
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+}
+

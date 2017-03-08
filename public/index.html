@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="es">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>PLANIFICADOR DE CURSOS</title>
+        <script src="jquery/jquery-3.1.1.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="/client/planificador.js"></script>
+        <script src="/client/vistaCurso.js"></script>
+        <script src="/client/vistaUsuario.js"></script>
+        <script src="/client/tools.js"></script>
+        <link href="/css/style.css" rel="stylesheet" type="text/css">
+    </head>
+
+    <body>
+        <div id="contenedor-cabecera">
+            <header>
+                <nav class="navbar navbar-inverse">
+                    <div class="container-fluid">
+                        <div class="navbar-header">
+                            <!-- Icono para el menú de los móviles-->
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                            <a id="nav-buscar-cursos" class="navbar-brand">Buscar cursos</a>
+                            <a id="nav-mis-cursos" class="navbar-brand">Mis cursos</a>
+                            <a id="nav-nuevo-curso" class="navbar-brand">Nuevo curso</a>
+                        </div>
+                        <div class="collapse navbar-collapse" id="myNavbar">
+                            <ul class="nav navbar-nav navbar-right">
+                                <li><a id="nav-correo"><span class="glyphicon glyphicon-user"></span> </a></li>
+                                <li><a id="nav-login"><span class="glyphicon glyphicon-log-in"></span> Identificarse</a></li>
+                                <li><a id="nav-close"><span class="glyphicon glyphicon-log-out"></span> Salir</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </header>
+        </div>
+        <div id="contenedor-principal">
+            <!-- Notificación success -->
+            <div id="success" class="alert alert-success alert-enable fade in">
+                <strong id="success-negrita"></strong>
+            </div>
+            <!-- Notificación aviso -->
+            <div id="aviso" class="aviso">
+                <strong id="aviso-negrita"></strong>
+            </div>
+            <!-- Notificación error -->
+            <div id="error" class="alert alert-danger alert-enable fade in">
+                <strong id="error-negrita"></strong>
+            </div>
+            <!-- PRINCIPIO: ventana Modal -->
+            <div id="myModal" class="modal">
+                <!-- Contenido de la ventana Modal -->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <span class="close">&times;</span>
+                    </div>
+                    <div class="modal-body">
+                    </div>
+                    <div class="modal-footer">
+                        <p id="msg-inscribirse"> Identificate para poder inscribirte en un curso</p>
+                        <button id="boton-inscribirse" class="btn btn-primary" type="button">
+                            Inscribirse
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- FINAL: ventana Modal de autenticación -->
+            <!-- PRINCIPIO: ventana Modal -->
+            <div id="myModalLogin" class="modalLogin">
+                <!-- Contenido de la ventana Modal -->
+                <div class="modal-contentLogin">
+                    <div class="modal-headerLogin">
+                    </div>
+                    <div class="modal-bodyLogin">
+                    </div>
+                    <div class="modal-footerLogin">
+                        <button id="goLogin" class="btn btn-primary" type="button">
+                            Ir a login
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- FINAL: ventana Modal de autenticación -->
+            <!-- PRINCIPIO: página de bienvenida -->
+            <div id="bienvenida">
+                <p id="bienvenida-mensaje">¡Regístrate y empieza a planificar tu conocimiento!</p>
+                <img class="imagen-bienvenida" src="../images/aprender.png">
+            </div>
+            <!-- FINAL: página de bienvenida -->
+            <!-- PRINCIPIO: página para buscar cursos -->
+            <div id="buscar-cursos">
+                <!--PRINCIPIO: Buscar -->
+                <h4>Búsqueda de cursos</h4>
+                <div class="input-group">
+                    <input type="text" id="campoTexto" class="form-control col-xs-4 " placeholder="Buscar por nombre">
+                    <div class="input-group-btn">
+                        <button class="btn btn-primary" id="boton-buscar" type="button">
+                            <i class="glyphicon glyphicon-search"> Buscar</i>
+                        </button>
+                    </div>
+                </div>
+                <!--FINAL: Buscar -->
+                </br>
+                </br>
+                <div class="container table-responsive">
+                    <!-- Tabla de resultados -->
+                    <table id ="tabla_cursos" class="table">
+                        <thead>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- PRINCIPIO: Paginación -->
+                <ul class="pagination" id="paginacion">
+                    <li><a href="#">&laquo;</a></li>
+                    <li class="active"><a href="#">1</a></li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">4</a></li>
+                    <li><a href="#">5</a></li>
+                    <li><a href="#">&raquo;</a></li>
+                </ul>
+                <!-- FINAL: Paginación -->
+            </div>
+            <!-- FINAL: página para buscar cursos -->
+            <!-- PRINCIPIO: página para crear un nuevo curso -->
+            <div id="nuevo-curso">
+                <h4>Nuevo curso</h4>
+                <p class="notasInformativas">Introduce los datos del nuevo curso. Los campos con (<font color="red">*</font>) son obligatorios.</p>
+                <div class="bootstrap-iso">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <form id="form_nuevo_curso" method="post" id="form-registro">
+                                    <div class="form-group ">
+                                        <label class="control-label requiredField" for="titulo">
+                                            T&iacute;tulo
+                                            <span class="asteriskField">
+                                                *
+                                            </span>
+                                        </label>
+                                        <input class="form-control" id="titulo" name="titulo" type="text"/>
+                                    </div>
+                                    <div class="form-group ">
+                                        <label class="control-label requiredField" for="descripcion">
+                                            Descripci&oacute;n del curso
+                                            <span class="asteriskField">
+                                                *
+                                            </span>
+                                        </label>
+                                        <textarea class="form-control" cols="40" id="descripcion" name="descripcion" placeholder="Introduce una breve descripci&oacute;n del curso" rows="10"></textarea>
+                                    </div>
+                                    <div class="form-group ">
+                                        <label class="control-label requiredField" for="localidad">
+                                            Lugar de impartici&oacute;n
+                                            <span class="asteriskField">
+                                                *
+                                            </span>
+                                        </label>
+                                        <input class="form-control" id="localidad" name="localidad" placeholder="&iquest;En qu&eacute; localidad se impartir&aacute;?" type="text"/>
+                                    </div>
+                                    <div class="form-group ">
+                                        <label class="control-label requiredField" for="direccion">
+                                            Direcci&oacute;n
+                                            <span class="asteriskField">
+                                                *
+                                            </span>
+                                        </label>
+                                        <input class="form-control" id="direccion" name="direccion" type="text"/>
+                                    </div>
+                                    <div class="form-group ">
+                                        <label class="control-label requiredField" for="plazas_disponibles">
+                                            Plazas disponibles
+                                            <span class="asteriskField">
+                                                *
+                                            </span>
+                                        </label>
+                                        <input class="form-control" id="plazas_disponibles" name="plazas_disponibles" placeholder="&iquest;De cu&aacute;ntas plazas dispondr&aacute; el curso?" type="text"/>
+                                    </div>
+                                    <div class="form-group ">
+                                        <label class="control-label requiredField" for="fecha_inicio">
+                                            Comienzo del curso
+                                            <span class="asteriskField">
+                                                *
+                                            </span>
+                                        </label>
+                                        <input class="form-control" id="fecha_inicio" name="fecha_inicio" placeholder="YYYY-MM-DD" type="date"/>
+                                    </div>
+                                    <div class="form-group ">
+                                        <label class="control-label requiredField" for="fecha_fin">
+                                            Finalizaci&oacute;n del curso
+                                            <span class="asteriskField">
+                                                *
+                                            </span>
+                                        </label>
+                                        <input class="form-control" id="fecha_fin" name="fecha_fin" placeholder="YYYY-MM-DD" type="date"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <div>
+                                            <button id="crear-curso" class="btn btn-primary" type="button">
+                                                Crear curso
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- FINAL: página para crear un nuevo curso -->
+            <!-- PRINCIPIO página para crear un nuevo usuario -->
+            <div id="registro">
+                <h4>Nuevo usuario</h4>
+                <p class="notasInformativas">Introduce tus datos de usuario. Los campos con (<font color="red">*</font>) son obligatorios.</p>
+                <div class="bootstrap-iso">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <form id="form_registro" method="post">
+                                    <div class="form-group ">
+                                        <label class="control-label requiredField" for="name">
+                                            Nombre
+                                            <span class="asteriskField">
+                                                *
+                                            </span>
+                                        </label>
+                                        <input class="form-control" id="name" name="name" type="text"/>
+                                    </div>
+                                    <div class="form-group ">
+                                        <label class="control-label requiredField" for="apellidos">
+                                            Apellidos
+                                            <span class="asteriskField">
+                                                *
+                                            </span>
+                                        </label>
+                                        <input class="form-control" id="apellidos" name="apellidos" type="text"/>
+                                    </div>
+                                    <div class="form-group ">
+                                        <label class="control-label requiredField" for="email">
+                                            Email
+                                            <span class="asteriskField">
+                                                *
+                                            </span>
+                                        </label>
+                                        <input class="form-control" id="email" name="email" type="text"/>
+                                    </div>
+                                    <div class="form-group ">
+                                        <label class="control-label requiredField" for="pass">
+                                            Contrase&ntilde;a
+                                            <span class="asteriskField">
+                                                *
+                                            </span>
+                                        </label>
+                                        <input class="form-control" id="pass" name="pass" type="password"/>
+                                    </div>
+                                    <div class="form-group" id="div_sexo">
+                                        <label class="control-label requiredField" for="sexo">
+                                            Sexo
+                                            <span class="asteriskField">
+                                                *
+                                            </span>
+                                        </label>
+                                        <div class="">
+                                            <label class="radio-inline">
+                                                <input name="sexo" type="radio" value="M"/>
+                                                Hombre
+                                            </label>
+                                            <label class="radio-inline">
+                                                <input name="sexo" type="radio" value="F"/>
+                                                Mujer
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <label class="control-label " for="nacimiento">
+                                            Nacimiento
+                                        </label>
+                                        <input class="form-control" id="nacimiento" name="nacimiento" placeholder="YYYY-MM-DD" type="date"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <div>
+                                            <button id="crear-cuenta" class="btn btn-primary" type="button">
+                                                Crear cuenta
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- FINAL: página para crear un nuevo usuario -->
+            <!-- PRINCIPIO: página para mostrar los cursos de un usuario -->
+            <div id="mis-cursos">
+                <div class="table-responsive">
+                    <table id="proximos_cursos" class="table">
+                        <h4>Próximos cursos</h4>
+                        <thead>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+                </br>
+                </br>
+                <div class="table-responsive">
+                    <table id="cursos_realizados" class="table">
+                        <h4>Cursos realizados</h4>
+                        <thead>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+                </br>
+                </br>
+                <div class="table-responsive large">
+                    <table id="horario" class="table">
+                        <h4>Tu horario</h4>
+                        <thead>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                    <br>
+                    <ul class="row pager pager--short">
+                        <li class="col-xs-4 previous ">
+                            <button id="boton-anterior" class="btn btn-default">
+                                <strong><i class="hidden-xs">←</i> Anterior</strong>
+                                <small id="fecha-anterior"></small>
+                            </button>
+                        </li>
+                        <li><span id="fecha-actual" class="center col-xs-4"></span></li>
+                        <li class="col-xs-4 next ">
+                            <button id="boton-siguiente" class="btn btn-default">
+                                <strong>Siguiente <i class="hidden-xs">→</i></strong>
+                                <small id="fecha-siguiente"></small>
+                              </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- FINAL: página para mostrar los cursos de un usuario -->
+            <!-- PRINCIPIO: página para hacer login -->
+            <div id="login">
+                <h4>Ingreso en el sistema</h4>
+                <p class="notasInformativas">Recuerda, los campos con (<font color="red">*</font>) son obligatorios.</p>
+                <div class="bootstrap-iso">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <form id="ingreso-sistema" method="get">
+                                    <div class="form-group">
+                                        <label class="control-label requiredField" for="login_email">
+                                            Email
+                                            <span class="asteriskField">
+                                                *
+                                            </span>
+                                        </label>
+                                        <input class="form-control" id="login_email" name="login_email" type="text"/>
+                                    </div>
+                                    <div class="form-group ">
+                                        <label class="control-label requiredField" for="login_pass">
+                                            Contrase&ntilde;a
+                                            <span class="asteriskField">
+                                                *
+                                            </span>
+                                        </label>
+                                        <input class="form-control" id="login_pass" name="login_pass" type="password"/>
+                                    </div>
+                                </form>
+                                <div class="form-group">
+                                    <div>
+                                        <button class="btn btn-primary" id="boton-entrar" >
+                                            Entrar
+                                        </button>
+                                        <button class="btn btn-primary" id="boton-registro" >
+                                            Crear nueva cuenta
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- FINAL: página para hacer login -->
+        </div>
+        <!--
+        <div id="contenedor-pie">
+                <footer class="container-fluid text-center">
+                        <span>© 2017 PRÁCTICA 2 - AW</span>
+                </footer>
+        </div>
+        -->
+    </body>
+</html>
